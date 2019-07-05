@@ -12,11 +12,20 @@ class CountdownTimer {
     const deltaDate = targetDate - currentDate;
     updateClockface(deltaDate);
 
-    setInterval(() => {
+    const timerId = setInterval(() => {
       const currentDate = Date.now();
       const deltaDate = targetDate - currentDate;
+
+      if (targetDate.getTime() < currentDate) {
+        clearInterval(timerId);
+
+        return;
+      }
+
       updateClockface(deltaDate);
     }, 1000);
+
+    console.log('targetDate', targetDate);
 
     function updateClockface(time) {
       days.textContent = pad(Math.floor(time / (1000 * 60 * 60 * 24)));
@@ -37,5 +46,5 @@ class CountdownTimer {
 
 new CountdownTimer({
   selector: '#timer-1',
-  targetDate: new Date('Jul 15, 2019'),
+  targetDate: new Date('Jul 5, 23:42, 2019'),
 });
