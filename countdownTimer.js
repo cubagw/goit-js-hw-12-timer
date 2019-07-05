@@ -8,6 +8,10 @@ class CountdownTimer {
     const mins = this.selector.querySelector('span[data-value="mins"]');
     const secs = this.selector.querySelector('span[data-value="secs"]');
 
+    const currentDate = Date.now();
+    const deltaDate = targetDate - currentDate;
+    updateClockface(deltaDate);
+
     setInterval(() => {
       const currentDate = Date.now();
       const deltaDate = targetDate - currentDate;
