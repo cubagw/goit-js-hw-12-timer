@@ -18,7 +18,6 @@ class CountdownTimer {
 
       if (targetDate.getTime() < currentDate) {
         clearInterval(timerId);
-
         return;
       }
 
@@ -46,5 +45,5 @@ class CountdownTimer {
 
 new CountdownTimer({
   selector: '#timer-1',
-  targetDate: new Date('Jul 5, 23:42, 2019'),
+  targetDate: new Date('Jul 20, 23:42, 2019'),
 });
