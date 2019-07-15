@@ -17,14 +17,17 @@ class CountdownTimer {
 
   currentTimeOnDial() {
     const currentDate = Date.now();
-    const deltaDate = this.targetDate - currentDate;
+    console.log(currentDate);
+    const deltaDate = this.targetDate.getTime() - currentDate;
+    console.log('this.targetDate.getTime()', this.targetDate.getTime());
     this.updateClockface(deltaDate);
   }
 
   changeTimeOnDial() {
     const timerId = setInterval(() => {
       const currentDate = Date.now();
-      const deltaDate = this.targetDate - currentDate;
+
+      const deltaDate = this.targetDate.getTime() - currentDate;
 
       if (this.targetDate.getTime() < currentDate) {
         clearInterval(timerId);
