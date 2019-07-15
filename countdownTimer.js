@@ -11,17 +11,17 @@ class CountdownTimer {
       mins: this.selector.querySelector('span[data-value="mins"]'),
       secs: this.selector.querySelector('span[data-value="secs"]'),
     };
-    this.updateTimeOnce();
-    this.updateTimeOnline();
+    this.currentTimeOnDial();
+    this.changeTimeOnDial();
   }
 
-  updateTimeOnce() {
+  currentTimeOnDial() {
     const currentDate = Date.now();
     const deltaDate = this.targetDate - currentDate;
     this.updateClockface(deltaDate);
   }
 
-  updateTimeOnline() {
+  changeTimeOnDial() {
     const timerId = setInterval(() => {
       const currentDate = Date.now();
       const deltaDate = this.targetDate - currentDate;
