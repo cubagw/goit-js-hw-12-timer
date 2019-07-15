@@ -1,45 +1,57 @@
 'use strict';
+
 class CountdownTimer {
   constructor({ selector, targetDate }) {
     this.selector = document.querySelector(selector);
+    this.targetDate = targetDate;
 
-    const days = this.selector.querySelector('span[data-value="days"]');
-    const hours = this.selector.querySelector('span[data-value="hours"]');
-    const mins = this.selector.querySelector('span[data-value="mins"]');
-    const secs = this.selector.querySelector('span[data-value="secs"]');
+    this.refs = {
+      days: this.selector.querySelector('span[data-value="days"]'),
+      hours: this.selector.querySelector('span[data-value="hours"]'),
+      mins: this.selector.querySelector('span[data-value="mins"]'),
+      secs: this.selector.querySelector('span[data-value="secs"]'),
+    };
+    this.updateTimeOnce();
+    this.updateTimeOnline();
+  }
 
+  updateTimeOnce() {
     const currentDate = Date.now();
-    const deltaDate = targetDate - currentDate;
-    updateClockface(deltaDate);
+    const deltaDate = this.targetDate - currentDate;
+    this.updateClockface(deltaDate);
+  }
 
+  updateTimeOnline() {
     const timerId = setInterval(() => {
       const currentDate = Date.now();
-      const deltaDate = targetDate - currentDate;
+      const deltaDate = this.targetDate - currentDate;
 
-      if (targetDate.getTime() < currentDate) {
+      if (this.targetDate.getTime() < currentDate) {
         clearInterval(timerId);
         return;
       }
 
-      updateClockface(deltaDate);
+      this.updateClockface(deltaDate);
     }, 1000);
+  }
 
-    console.log('targetDate', targetDate);
+  updateClockface(time) {
+    this.refs.days.textContent = this.pad(
+      Math.floor(time / (1000 * 60 * 60 * 24)),
+    );
+    this.refs.hours.textContent = this.pad(
+      Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    );
+    this.refs.mins.textContent = this.pad(
+      Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)),
+    );
+    this.refs.secs.textContent = this.pad(
+      Math.floor((time % (1000 * 60)) / 1000),
+    );
+  }
 
-    function updateClockface(time) {
-      days.textContent = pad(Math.floor(time / (1000 * 60 * 60 * 24)));
-      hours.textContent = pad(
-        Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-      );
-      mins.textContent = pad(
-        Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)),
-      );
-      secs.textContent = pad(Math.floor((time % (1000 * 60)) / 1000));
-    }
-
-    function pad(value) {
-      return String(value).padStart(2, '0');
-    }
+  pad(value) {
+    return String(value).padStart(2, '0');
   }
 }
 
